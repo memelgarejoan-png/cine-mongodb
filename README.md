@@ -1,22 +1,22 @@
-# 🎬 Sistema de Gestión de Cine — MongoDB + Python
+# Sistema de Gestion de Cine — MongoDB + Python
 
-Sistema de gestión de una cartelera de cine desarrollado en Python con PyMongo, que permite administrar películas, funciones y detalles desde una interfaz de consola.
+Sistema de gestion de una cartelera de cine desarrollado en Python con PyMongo, que permite administrar peliculas, funciones y detalles desde una interfaz de consola.
 
 ---
 
-## 📋 Descripción del caso de estudio
+## Descripcion del caso de estudio
 
-El sistema gestiona una colección de **películas** (`peliculas`) dentro de una base de datos MongoDB llamada `cine_db`. Cada documento representa una película en cartelera e incluye:
+El sistema gestiona una coleccion de peliculas dentro de una base de datos MongoDB llamada `cine_db`. Cada documento representa una pelicula en cartelera e incluye:
 
-- **Subdocumento** (`detalles`): director e idioma de la película.
+- **Subdocumento** (`detalles`): director e idioma de la pelicula.
 - **Array de subdocumentos** (`funciones`): lista de funciones con fecha, hora, sala y precio.
-- **Campo de fecha** (`fecha_estreno`): fecha oficial de estreno de la película.
+- **Campo de fecha** (`fecha_estreno`): fecha oficial de estreno de la pelicula.
 
-La base de datos se precarga automáticamente con **12 películas** al ejecutar el sistema por primera vez.
+La base de datos se precarga con **12 peliculas** ejecutando `carga_datos.py` antes de iniciar el sistema.
 
 ---
 
-## 🗂️ Estructura del documento
+## Estructura del documento
 
 ```json
 {
@@ -26,7 +26,7 @@ La base de datos se precarga automáticamente con **12 películas** al ejecutar 
   "clasificacion": "R",
   "detalles": {
     "director": "Christopher Nolan",
-    "idioma": "Inglés"
+    "idioma": "Ingles"
   },
   "funciones": [
     {
@@ -42,21 +42,21 @@ La base de datos se precarga automáticamente con **12 películas** al ejecutar 
 
 ---
 
-## ⚙️ Requisitos previos
+## Requisitos previos
 
 - Python 3.8 o superior
-- MongoDB instalado y corriendo en `localhost:27017`
+- MongoDB 7 instalado y corriendo en `localhost:27017`
 - pip
 
 ---
 
-## 🚀 Instalación y ejecución
+## Instalacion y ejecucion
 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/<tu-usuario>/<nombre-del-repo>.git
-cd <nombre-del-repo>
+git clone https://github.com/memelgarejoan-png/cine-mongodb.git
+cd cine-mongodb
 ```
 
 ### 2. Instalar dependencias
@@ -67,96 +67,87 @@ pip install pymongo python-dotenv
 
 ### 3. Configurar variables de entorno
 
-Crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
+Crear un archivo `.env` en la raiz del proyecto con el siguiente contenido:
 
 ```
 MONGO_URI=mongodb://localhost:27017
 ```
 
-### 4. Asegurarse de que MongoDB esté corriendo
+### 4. Asegurarse de que MongoDB este corriendo
 
 ```bash
-# En Windows (si MongoDB está instalado como servicio)
+# En Windows
 net start MongoDB
 
 # En Linux/macOS
 sudo systemctl start mongod
 ```
 
-### 5. Ejecutar el sistema
+### 5. Cargar los datos iniciales
+
+```bash
+python carga_datos.py
+```
+
+### 6. Ejecutar el sistema
 
 ```bash
 python main.py
 ```
 
-Al iniciar por primera vez, el sistema cargará automáticamente los datos de prueba si la colección está vacía.
-
 ---
 
-## 📌 Funcionalidades del menú
+## Funcionalidades del menu
 
-| Opción | Descripción | Operación MongoDB |
+| Opcion | Descripcion | Operacion MongoDB |
 |--------|-------------|-------------------|
-| 1 | Listar todas las películas | `find()` |
-| 2 | Agregar nueva película | `insert_one()` |
-| 3 | Buscar por precio máximo de función | `$lte` sobre array de subdocumentos |
-| 4 | Buscar por título | `$regex` (case-insensitive) |
+| 1 | Listar todas las peliculas | `find()` |
+| 2 | Agregar nueva pelicula | `insert_one()` |
+| 3 | Buscar por precio maximo de funcion | `$lte` sobre array de subdocumentos |
+| 4 | Buscar por titulo | `$regex` (case-insensitive) |
 | 5 | Buscar por rango de fecha de estreno | `$gte` + `$lte` sobre campo fecha |
 | 6 | Buscar por idioma | Consulta sobre subdocumento `detalles.idioma` |
-| 7 | Actualizar clasificación | `$set` en campo raíz |
+| 7 | Actualizar clasificacion | `$set` en campo raiz |
 | 8 | Actualizar director | `$set` en subdocumento `detalles.director` |
-| 9 | Eliminar película | `delete_one()` con confirmación previa |
+| 9 | Eliminar pelicula | `delete_one()` con confirmacion previa |
 | 0 | Salir | — |
 
 ---
 
-## 🗄️ Base de datos y colección
+## Base de datos y coleccion
 
 - **Base de datos:** `cine_db`
-- **Colección:** `peliculas`
-- **Conexión:** `mongodb://localhost:27017` (configurable vía `.env`)
+- **Coleccion:** `peliculas`
+- **Conexion:** `mongodb://localhost:27017`
 
 ---
 
-## 📁 Estructura del proyecto
+## Estructura del proyecto
 
 ```
-📦 cine-mongodb/
- ┣ 📄 main.py        # Código principal del sistema
- ┣ 📄 .env           # Variables de entorno (no subir al repo)
- ┣ 📄 .env.example   # Ejemplo de configuración
- ┣ 📄 requirements.txt
- ┗ 📄 README.md
-```
-
----
-
-## 📦 requirements.txt
-
-```
-pymongo
-python-dotenv
-```
-
-Para generar el archivo:
-
-```bash
-pip freeze > requirements.txt
+cine-mongodb/
+ |- carga_datos.py       # Inserta los 12 documentos iniciales
+ |- main.py              # Menu principal y funciones CRUD
+ |- .gitignore
+ |- README.md
 ```
 
 ---
 
-## 👥 Integrantes del grupo
+## Integrantes del grupo
 
 | Nombre | Rol |
 |--------|-----|
-| — | Desarrollo |
+| Mayra Melgarejo| Desarrollo |
 | — | Desarrollo |
 
 ---
 
-## 📝 Notas
+## Notas
 
-- Si la colección ya contiene datos, la carga inicial **no se ejecuta** para evitar duplicados.
-- El sistema valida que la película exista antes de actualizar o eliminar.
-- La eliminación solicita confirmación del usuario antes de proceder.
+- Ejecutar `carga_datos.py` primero antes de usar el sistema.
+- Si la coleccion ya tiene datos, `carga_datos.py` no inserta nada para evitar duplicados.
+- El sistema valida que la pelicula exista antes de actualizar o eliminar.
+- La eliminacion solicita confirmacion del usuario antes de proceder.
+- El archivo `.env` no se sube a GitHub por seguridad.
+- Se cambia  la conección  de atlas  a forma local
