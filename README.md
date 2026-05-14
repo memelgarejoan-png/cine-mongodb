@@ -137,9 +137,9 @@ cine-mongodb/
 ## Integrantes del grupo
 
 | Nombre | Rol |
-|--------|-----|
+|--------|-----|git status
 | Mayra Melgarejo| Desarrollo |
-| — | Desarrollo |
+| Javier Venegas| Desarrollo |
 
 ---
 
