@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from datetime import datetime
 from dotenv import load_dotenv
+from datos import peliculas_iniciales
 import os
 
 # -- Conexion ------------------------------------------------------------------
@@ -13,174 +14,79 @@ col = db["peliculas"]
 # -- Carga de datos iniciales --------------------------------------------------
 def cargar_datos_iniciales():
     if col.count_documents({}) == 0:
-        col.insert_many([
-            {
-                "titulo": "Avengers: Endgame",
-                "genero": "Accion",
-                "duracion_min": 181,
-                "clasificacion": "PG-13",
-                "detalles": {"director": "Anthony Russo", "idioma": "Ingles"},
-                "funciones": [{"fecha": datetime(2026, 5, 1), "hora": "18:00", "sala": 1, "precio": 5000}],
-                "fecha_estreno": datetime(2019, 4, 26)
-            },
-            {
-                "titulo": "Avatar 3",
-                "genero": "Ciencia ficcion",
-                "duracion_min": 190,
-                "clasificacion": "PG-13",
-                "detalles": {"director": "James Cameron", "idioma": "Ingles"},
-                "funciones": [
-                    {"fecha": datetime(2026, 5, 1), "hora": "18:00", "sala": 1, "precio": 7000},
-                    {"fecha": datetime(2026, 5, 2), "hora": "21:00", "sala": 2, "precio": 7500}
-                ],
-                "fecha_estreno": datetime(2025, 12, 20)
-            },
-            {
-                "titulo": "El Mono",
-                "genero": "Terror",
-                "duracion_min": 100,
-                "clasificacion": "R",
-                "detalles": {"director": "Desconocido", "idioma": "Espanol"},
-                "funciones": [{"fecha": datetime(2026, 5, 3), "hora": "22:00", "sala": 3, "precio": 5000}],
-                "fecha_estreno": datetime(2024, 10, 10)
-            },
-            {
-                "titulo": "Zootopia 2",
-                "genero": "Animacion",
-                "duracion_min": 110,
-                "clasificacion": "PG",
-                "detalles": {"director": "Disney", "idioma": "Espanol"},
-                "funciones": [{"fecha": datetime(2026, 5, 4), "hora": "16:00", "sala": 2, "precio": 4500}],
-                "fecha_estreno": datetime(2025, 11, 26)
-            },
-            {
-                "titulo": "Dune: Parte 2",
-                "genero": "Ciencia ficcion",
-                "duracion_min": 166,
-                "clasificacion": "PG-13",
-                "detalles": {"director": "Denis Villeneuve", "idioma": "Ingles"},
-                "funciones": [{"fecha": datetime(2026, 5, 5), "hora": "20:00", "sala": 1, "precio": 6500}],
-                "fecha_estreno": datetime(2024, 3, 1)
-            },
-            {
-                "titulo": "Oppenheimer",
-                "genero": "Drama",
-                "duracion_min": 180,
-                "clasificacion": "R",
-                "detalles": {"director": "Christopher Nolan", "idioma": "Ingles"},
-                "funciones": [{"fecha": datetime(2026, 5, 6), "hora": "19:30", "sala": 2, "precio": 6000}],
-                "fecha_estreno": datetime(2023, 7, 21)
-            },
-            {
-                "titulo": "Barbie",
-                "genero": "Comedia",
-                "duracion_min": 114,
-                "clasificacion": "PG-13",
-                "detalles": {"director": "Greta Gerwig", "idioma": "Espanol"},
-                "funciones": [{"fecha": datetime(2026, 5, 7), "hora": "18:30", "sala": 3, "precio": 5000}],
-                "fecha_estreno": datetime(2023, 7, 21)
-            },
-            {
-                "titulo": "Deadpool 3",
-                "genero": "Accion",
-                "duracion_min": 130,
-                "clasificacion": "R",
-                "detalles": {"director": "Shawn Levy", "idioma": "Ingles"},
-                "funciones": [{"fecha": datetime(2026, 5, 8), "hora": "22:30", "sala": 1, "precio": 7000}],
-                "fecha_estreno": datetime(2024, 7, 26)
-            },
-            {
-                "titulo": "Inside Out 2",
-                "genero": "Animacion",
-                "duracion_min": 105,
-                "clasificacion": "PG",
-                "detalles": {"director": "Kelsey Mann", "idioma": "Espanol"},
-                "funciones": [{"fecha": datetime(2026, 5, 9), "hora": "17:00", "sala": 2, "precio": 4500}],
-                "fecha_estreno": datetime(2024, 6, 14)
-            },
-            {
-                "titulo": "Dragon Ball Z: La Batalla de los Dioses",
-                "genero": ["Anime", "Animacion", "Accion"],
-                "duracion_min": 105,
-                "clasificacion": "PG",
-                "detalles": {"director": "Masahiro Hosoda", "idioma": "Japones"},
-                "funciones": [{"fecha": datetime(2015, 5, 10), "hora": "16:00", "sala": 5, "precio": 5500}],
-                "fecha_estreno": datetime(2013, 10, 3)
-            },
-            {
-                "titulo": "Kung Fu Panda",
-                "genero": ["Animacion", "Cine familiar", "Accion"],
-                "duracion_min": 94,
-                "clasificacion": "PG",
-                "detalles": {"director": "Mike Mitchell", "idioma": "Espanol"},
-                "funciones": [{"fecha": datetime(2020, 7, 12), "hora": "16:00", "sala": 3, "precio": 4500}],
-                "fecha_estreno": datetime(2008, 7, 10)
-            },
-            {
-                "titulo": "Demon Slayer: Kimetsu no Yaiba - Castillo Infinito",
-                "genero": ["Anime", "Animacion", "Accion"],
-                "duracion_min": 155,
-                "clasificacion": "B15",
-                "detalles": {"director": "Haruo Sotozaki", "idioma": "Japones"},
-                "funciones": [{"fecha": datetime(2026, 3, 25), "hora": "15:00", "sala": 4, "precio": 6500}],
-                "fecha_estreno": datetime(2025, 7, 11)
-            }
-        ])
-        print("Datos iniciales cargados.")
+        col.insert_many(peliculas_iniciales)
+        print("Datos iniciales cargados correctamente.")
+    else:
+        print(f"Base de datos lista. ({col.count_documents({})} peliculas encontradas)")
 
 
 # -- Helpers -------------------------------------------------------------------
-def separador():
-    print("\n" + "=" * 50)
+def separador(titulo=""):
+    if titulo:
+        print("\n" + "=" * 50)
+        print(f"   {titulo.upper()}")
+        print("=" * 50)
+    else:
+        print("=" * 50)
 
 
 def mostrar_pelicula(p):
-    print(f"\nTitulo      : {p.get('titulo')}")
-    print(f"Genero      : {p.get('genero')}")
-    print(f"Duracion    : {p.get('duracion_min')} min")
-    print(f"Clasificac. : {p.get('clasificacion')}")
+    genero = p.get("genero")
+    if isinstance(genero, list):
+        genero = ", ".join(genero)
+    print(f"\n  Titulo      : {p.get('titulo')}")
+    print(f"  Genero      : {genero}")
+    print(f"  Duracion    : {p.get('duracion_min')} min")
+    print(f"  Clasificac. : {p.get('clasificacion')}")
     det = p.get("detalles", {})
-    print(f"Director    : {det.get('director')}")
-    print(f"Idioma      : {det.get('idioma')}")
-    print(f"Estreno     : {p.get('fecha_estreno').strftime('%Y-%m-%d') if p.get('fecha_estreno') else 'N/A'}")
+    print(f"  Director    : {det.get('director')}")
+    print(f"  Idioma      : {det.get('idioma')}")
+    print(f"  Estreno     : {p.get('fecha_estreno').strftime('%Y-%m-%d') if p.get('fecha_estreno') else 'N/A'}")
     for i, f in enumerate(p.get("funciones", []), 1):
         fecha_f = f.get("fecha").strftime("%Y-%m-%d") if f.get("fecha") else "N/A"
-        print(f"Funcion {i}   : {fecha_f} {f.get('hora')} | Sala {f.get('sala')} | ${f.get('precio')}")
+        print(f"  Funcion {i}   : {fecha_f} {f.get('hora')} | Sala {f.get('sala')} | ${f.get('precio'):,}")
+
+
+def confirmar_accion(mensaje="  Confirmas la accion? (s/n): "):
+    return input(mensaje).strip().lower() == "s"
 
 
 # -- 1. LISTAR TODAS -----------------------------------------------------------
 def listar_peliculas():
-    separador()
-    print("TODAS LAS PELICULAS")
-    separador()
+    separador("Todas las peliculas")
     peliculas = list(col.find())
     if not peliculas:
-        print("No hay peliculas en la base de datos.")
+        print("\n  No hay peliculas en la base de datos.")
         return
     for p in peliculas:
+        separador()
         mostrar_pelicula(p)
-    print(f"\nTotal: {len(peliculas)} peliculas.")
+    print(f"\n  Total: {len(peliculas)} peliculas.")
 
 
 # -- 2. CREAR DOCUMENTO --------------------------------------------------------
 def crear_pelicula():
-    separador()
-    print("AGREGAR NUEVA PELICULA")
-    separador()
-    titulo = input("Titulo: ").strip()
-    genero = input("Genero: ").strip()
-    duracion = int(input("Duracion (minutos): "))
-    clasificacion = input("Clasificacion (PG / PG-13 / R): ").strip()
-    director = input("Director: ").strip()
-    idioma = input("Idioma: ").strip()
-    estreno_str = input("Fecha de estreno (YYYY-MM-DD): ").strip()
+    separador("Agregar nueva pelicula")
+    titulo = input("  Titulo: ").strip()
+
+    # Verificar si ya existe
+    if col.find_one({"titulo": {"$regex": f"^{titulo}$", "$options": "i"}}):
+        print(f"\n  Ya existe una pelicula con el titulo '{titulo}'.")
+        return
+
+    genero = input("  Genero: ").strip()
+    duracion = int(input("  Duracion (minutos): "))
+    clasificacion = input("  Clasificacion (PG / PG-13 / R): ").strip()
+    director = input("  Director: ").strip()
+    idioma = input("  Idioma: ").strip()
+    estreno_str = input("  Fecha de estreno (YYYY-MM-DD): ").strip()
     fecha_estreno = datetime.strptime(estreno_str, "%Y-%m-%d")
-    print("\n--- Agregar funcion ---")
-    fecha_f_str = input("Fecha de funcion (YYYY-MM-DD): ").strip()
+    print("\n  --- Agregar funcion ---")
+    fecha_f_str = input("  Fecha de funcion (YYYY-MM-DD): ").strip()
     fecha_funcion = datetime.strptime(fecha_f_str, "%Y-%m-%d")
-    hora = input("Hora (HH:MM): ").strip()
-    sala = int(input("Sala: "))
-    precio = int(input("Precio: "))
+    hora = input("  Hora (HH:MM): ").strip()
+    sala = int(input("  Sala: "))
+    precio = int(input("  Precio: $"))
     nueva = {
         "titulo": titulo,
         "genero": genero,
@@ -191,144 +97,149 @@ def crear_pelicula():
         "fecha_estreno": fecha_estreno
     }
     resultado = col.insert_one(nueva)
-    print(f"\nPelicula insertada con ID: {resultado.inserted_id}")
+    print(f"\n  Pelicula '{titulo}' insertada correctamente. ID: {resultado.inserted_id}")
 
 
 # -- 3. BUSCAR POR PRECIO ------------------------------------------------------
 def buscar_por_precio():
-    separador()
-    print("BUSCAR POR PRECIO MAXIMO DE FUNCION")
-    separador()
-    precio_max = int(input("Ingresa el precio maximo: $"))
+    separador("Buscar por precio maximo")
+    try:
+        precio_max = int(input("  Ingresa el precio maximo: $"))
+    except ValueError:
+        print("\n  Error: ingresa un numero valido.")
+        return
     peliculas = list(col.find({"funciones.precio": {"$lte": precio_max}}))
     if not peliculas:
-        print("No se encontraron peliculas con ese precio.")
+        print(f"\n  No se encontraron peliculas con precio <= ${precio_max:,}.")
         return
     for p in peliculas:
+        separador()
         mostrar_pelicula(p)
-    print(f"\nTotal encontradas: {len(peliculas)}")
+    print(f"\n  Total encontradas: {len(peliculas)} (precio <= ${precio_max:,})")
 
 
 # -- 4. BUSCAR POR REGEX -------------------------------------------------------
 def buscar_por_titulo():
-    separador()
-    print("BUSCAR POR TITULO (expresion regular)")
-    separador()
-    texto = input("Ingresa parte del titulo a buscar: ").strip()
+    separador("Buscar por titulo")
+    texto = input("  Ingresa parte del titulo: ").strip()
     peliculas = list(col.find({"titulo": {"$regex": texto, "$options": "i"}}))
     if not peliculas:
-        print("No se encontraron peliculas con ese titulo.")
+        print(f"\n  No se encontraron peliculas con '{texto}' en el titulo.")
         return
     for p in peliculas:
+        separador()
         mostrar_pelicula(p)
-    print(f"\nTotal encontradas: {len(peliculas)}")
+    print(f"\n  Total encontradas: {len(peliculas)}")
 
 
 # -- 5. BUSCAR POR RANGO DE FECHAS ---------------------------------------------
 def buscar_por_fechas():
-    separador()
-    print("BUSCAR POR RANGO DE FECHA DE ESTRENO")
-    separador()
-    desde = datetime.strptime(input("Fecha desde (YYYY-MM-DD): ").strip(), "%Y-%m-%d")
-    hasta = datetime.strptime(input("Fecha hasta (YYYY-MM-DD): ").strip(), "%Y-%m-%d")
+    separador("Buscar por rango de fecha de estreno")
+    try:
+        desde = datetime.strptime(input("  Fecha desde (YYYY-MM-DD): ").strip(), "%Y-%m-%d")
+        hasta = datetime.strptime(input("  Fecha hasta (YYYY-MM-DD): ").strip(), "%Y-%m-%d")
+    except ValueError:
+        print("\n  Error: formato de fecha incorrecto. Usa YYYY-MM-DD.")
+        return
+    if desde > hasta:
+        print("\n  Error: la fecha 'desde' no puede ser mayor que 'hasta'.")
+        return
     peliculas = list(col.find({"fecha_estreno": {"$gte": desde, "$lte": hasta}}))
     if not peliculas:
-        print("No se encontraron peliculas en ese rango de fechas.")
+        print("\n  No se encontraron peliculas en ese rango de fechas.")
         return
     for p in peliculas:
+        separador()
         mostrar_pelicula(p)
-    print(f"\nTotal encontradas: {len(peliculas)}")
+    print(f"\n  Total encontradas: {len(peliculas)}")
+    print(f"  Rango: {desde.strftime('%Y-%m-%d')} hasta {hasta.strftime('%Y-%m-%d')}")
 
 
 # -- 6. BUSCAR EN SUBDOCUMENTO -------------------------------------------------
 def buscar_por_idioma():
-    separador()
-    print("BUSCAR POR IDIOMA (campo dentro de subdocumento)")
-    separador()
-    idioma = input("Idioma (Espanol / Ingles / Japones): ").strip()
-    peliculas = list(col.find({"detalles.idioma": idioma}))
+    separador("Buscar por idioma")
+    idioma = input("  Idioma (Espanol / Ingles / Japones): ").strip()
+    peliculas = list(col.find({"detalles.idioma": {"$regex": f"^{idioma}$", "$options": "i"}}))
     if not peliculas:
-        print("No se encontraron peliculas en ese idioma.")
+        print(f"\n  No se encontraron peliculas en idioma '{idioma}'.")
         return
     for p in peliculas:
+        separador()
         mostrar_pelicula(p)
-    print(f"\nTotal encontradas: {len(peliculas)}")
+    print(f"\n  Total encontradas: {len(peliculas)}")
 
 
 # -- 7. ACTUALIZAR CAMPO RAIZ --------------------------------------------------
 def actualizar_clasificacion():
-    separador()
-    print("ACTUALIZAR CLASIFICACION DE PELICULA")
-    separador()
-    titulo = input("Titulo de la pelicula: ").strip()
+    separador("Actualizar clasificacion")
+    titulo = input("  Titulo de la pelicula: ").strip()
     pelicula = col.find_one({"titulo": {"$regex": titulo, "$options": "i"}})
     if not pelicula:
-        print("Pelicula no encontrada.")
+        print("\n  Pelicula no encontrada.")
         return
-    print("\nAntes:")
+    print("\n  Antes:")
     mostrar_pelicula(pelicula)
-    nueva_clasificacion = input("\nNueva clasificacion: ").strip()
+    nueva_clasificacion = input("\n  Nueva clasificacion: ").strip()
+    if not confirmar_accion("  Confirmas el cambio? (s/n): "):
+        print("  Operacion cancelada.")
+        return
     col.update_one({"_id": pelicula["_id"]}, {"$set": {"clasificacion": nueva_clasificacion}})
-    print("\nClasificacion actualizada. Despues:")
+    print("\n  Clasificacion actualizada. Despues:")
     mostrar_pelicula(col.find_one({"_id": pelicula["_id"]}))
 
 
 # -- 8. ACTUALIZAR CAMPO EN SUBDOCUMENTO ---------------------------------------
 def actualizar_director():
-    separador()
-    print("ACTUALIZAR DIRECTOR (dentro de subdocumento)")
-    separador()
-    titulo = input("Titulo de la pelicula: ").strip()
+    separador("Actualizar director")
+    titulo = input("  Titulo de la pelicula: ").strip()
     pelicula = col.find_one({"titulo": {"$regex": titulo, "$options": "i"}})
     if not pelicula:
-        print("Pelicula no encontrada.")
+        print("\n  Pelicula no encontrada.")
         return
-    print("\nAntes:")
+    print("\n  Antes:")
     mostrar_pelicula(pelicula)
-    nuevo_director = input("\nNuevo director: ").strip()
+    nuevo_director = input("\n  Nuevo director: ").strip()
+    if not confirmar_accion("  Confirmas el cambio? (s/n): "):
+        print("  Operacion cancelada.")
+        return
     col.update_one({"_id": pelicula["_id"]}, {"$set": {"detalles.director": nuevo_director}})
-    print("\nDirector actualizado. Despues:")
+    print("\n  Director actualizado. Despues:")
     mostrar_pelicula(col.find_one({"_id": pelicula["_id"]}))
 
 
 # -- 9. ELIMINAR PELICULA ------------------------------------------------------
 def eliminar_pelicula():
-    separador()
-    print("ELIMINAR PELICULA")
-    separador()
-    titulo = input("Titulo de la pelicula a eliminar: ").strip()
+    separador("Eliminar pelicula")
+    titulo = input("  Titulo de la pelicula a eliminar: ").strip()
     pelicula = col.find_one({"titulo": {"$regex": titulo, "$options": "i"}})
     if not pelicula:
-        print("Pelicula no encontrada.")
+        print("\n  Pelicula no encontrada.")
         return
-    print("\nPelicula a eliminar:")
+    print("\n  Pelicula a eliminar:")
     mostrar_pelicula(pelicula)
-    confirmacion = input("\nConfirmas la eliminacion? (s/n): ").strip().lower()
-    if confirmacion == "s":
-        col.delete_one({"_id": pelicula["_id"]})
-        print("Pelicula eliminada correctamente.")
-    else:
-        print("Operacion cancelada.")
+    if not confirmar_accion("\n  Confirmas la eliminacion? (s/n): "):
+        print("  Operacion cancelada.")
+        return
+    col.delete_one({"_id": pelicula["_id"]})
+    print(f"\n  Pelicula '{pelicula.get('titulo')}' eliminada correctamente.")
 
 
 # -- MENU PRINCIPAL ------------------------------------------------------------
 def menu():
     while True:
-        separador()
-        print("SISTEMA DE GESTION DE CINE")
-        separador()
+        separador("Sistema de Gestion de Cine")
         print("  1. Listar todas las peliculas")
         print("  2. Agregar nueva pelicula")
         print("  3. Buscar por precio maximo")
         print("  4. Buscar por titulo")
         print("  5. Buscar por rango de fecha de estreno")
-        print("  6. Buscar por idioma (subdocumento)")
+        print("  6. Buscar por idioma")
         print("  7. Actualizar clasificacion")
         print("  8. Actualizar director")
         print("  9. Eliminar pelicula")
         print("  0. Salir")
         separador()
-        opcion = input("Selecciona una opcion: ").strip()
+        opcion = input("  Selecciona una opcion: ").strip()
 
         if opcion == "1":
             listar_peliculas()
@@ -349,13 +260,16 @@ def menu():
         elif opcion == "9":
             eliminar_pelicula()
         elif opcion == "0":
-            print("\nHasta luego.")
+            print("\n  Hasta luego.")
+            client.close()
             break
         else:
-            print("Opcion invalida. Intenta de nuevo.")
+            print("\n  Opcion invalida. Intenta de nuevo.")
 
-        input("\nPresiona Enter para continuar...")
+        input("\n  Presiona Enter para continuar...")
 
 
+# -- ENTRADA -------------------------------------------------------------------
 if __name__ == "__main__":
+    cargar_datos_iniciales()
     menu()

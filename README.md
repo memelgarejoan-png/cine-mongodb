@@ -12,7 +12,7 @@ El sistema gestiona una coleccion de peliculas dentro de una base de datos Mongo
 - **Array de subdocumentos** (`funciones`): lista de funciones con fecha, hora, sala y precio.
 - **Campo de fecha** (`fecha_estreno`): fecha oficial de estreno de la pelicula.
 
-La base de datos se precarga con **12 peliculas** ejecutando `carga_datos.py` antes de iniciar el sistema.
+Al ejecutar `main.py` por primera vez, el sistema carga automaticamente **12 peliculas** desde `datos.py`.
 
 ---
 
@@ -83,17 +83,14 @@ net start MongoDB
 sudo systemctl start mongod
 ```
 
-### 5. Cargar los datos iniciales
-
-```bash
-python carga_datos.py
-```
-
-### 6. Ejecutar el sistema
+### 5. Ejecutar el sistema
 
 ```bash
 python main.py
 ```
+
+> La primera vez que se ejecuta, los datos iniciales se cargan automaticamente desde `datos.py`.
+> Si la coleccion ya tiene datos, el sistema lo detecta y no inserta nada para evitar duplicados.
 
 ---
 
@@ -126,10 +123,11 @@ python main.py
 
 ```
 cine-mongodb/
- |- carga_datos.py       # Inserta los 12 documentos iniciales
- |- main.py              # Menu principal y funciones CRUD
- |- .gitignore
- |- README.md
+ ├── datos.py        # Lista de las 12 peliculas iniciales
+ ├── main.py         # Menu principal y funciones CRUD
+ ├── .env            # Variable de conexion (no se sube a GitHub)
+ ├── .gitignore
+ └── README.md
 ```
 
 ---
@@ -137,17 +135,16 @@ cine-mongodb/
 ## Integrantes del grupo
 
 | Nombre | Rol |
-|--------|-----|git status
-| Mayra Melgarejo| Desarrollo |
-| Javier Venegas| Desarrollo |
+|--------|-----|
+| Mayra Melgarejo | Desarrollo |
+| Javier Venegas | Desarrollo |
 
 ---
 
 ## Notas
 
-- Ejecutar `carga_datos.py` primero antes de usar el sistema.
-- Si la coleccion ya tiene datos, `carga_datos.py` no inserta nada para evitar duplicados.
+- No es necesario ejecutar ningun script previo; `main.py` carga los datos automaticamente la primera vez.
 - El sistema valida que la pelicula exista antes de actualizar o eliminar.
 - La eliminacion solicita confirmacion del usuario antes de proceder.
 - El archivo `.env` no se sube a GitHub por seguridad.
-- Se cambia  la conección  de atlas  a forma local
+- La conexion utiliza MongoDB local en lugar de Atlas.

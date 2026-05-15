@@ -1,16 +1,6 @@
-from pymongo import MongoClient
 from datetime import datetime
-from dotenv import load_dotenv
-import os
 
-# -- Conexion ------------------------------------------------------------------
-load_dotenv()
-client = MongoClient(os.getenv("MONGO_URI"))
-db = client["cine_db"]
-col = db["peliculas"]
-
-# -- Datos iniciales -----------------------------------------------------------
-peliculas = [
+peliculas_iniciales = [
     {
         "titulo": "Avengers: Endgame",
         "genero": "Accion",
@@ -123,12 +113,3 @@ peliculas = [
         "fecha_estreno": datetime(2025, 7, 11)
     }
 ]
-
-# -- Insertar solo si la coleccion esta vacia ---------------------------------
-if col.count_documents({}) == 0:
-    col.insert_many(peliculas)
-    print(f"Se insertaron {len(peliculas)} peliculas correctamente.")
-else:
-    print("La coleccion ya tiene datos. No se inserto nada.")
-
-client.close()
